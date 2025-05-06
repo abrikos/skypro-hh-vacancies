@@ -59,8 +59,7 @@ if __name__ == "__main__":
     def delete_from_saved(id:str)->None:
         file_handler.delete_vacancy(id)
 
-    debug = 1
-    while debug:
+    while True:
         print("Choose action:")
         print("1. Get vacancies from HH by keyword")
         print("2. Get top N vacancies by salary from HH")
