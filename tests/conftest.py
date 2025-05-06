@@ -1,3 +1,4 @@
+import json
 from typing import Any
 from unittest.mock import patch
 
@@ -15,27 +16,53 @@ def mock_session() -> Any:
 
 @pytest.fixture
 def vacancy1() -> Vacancy:
-    return Vacancy("1", "a", "b", 10, "http://x.com", "Y", "AA")
+    return Vacancy({"id":"1", "name":"a", "company":"b", "salary":10, "url":"http://x.com", "city":"Y", "description":"AA"})
 
 
 @pytest.fixture
 def vacancy2() -> Vacancy:
-    return Vacancy("2", "b", "c", 20, "http://y.ru", "G", "BB")
+    return Vacancy({"id": "2", "name": "b", "company": "b", "salary": 20, "url": "http://y.ru", "city": "G", "description": "BB"})
 
 
 @pytest.fixture
 def vacancy_wrong() -> Vacancy:
-    return Vacancy("3", "", "", -1, "wrong", "", "")
+    return Vacancy({"id": "3", "name": "", "company": "", "salary": -1, "url": "wrong", "city": "", "description": ""})
 
 
 @pytest.fixture
 def json_file_handler(tmpdir: str) -> object:
-    handler = JSONFileHandler(filename=str(tmpdir.join("test_vacancies.json")))
+    filename = str(tmpdir.join("vacs.json"))
+    with open(filename,"w") as f:
+        json.dump([], f)
+    handler = JSONFileHandler(filename)
     return handler
 
 
+@pytest.fixture()
+def test_data_from_json()->list:
+    return [
+        {
+            "id": "11",
+            "name": "Junior Data Engineer",
+            "company": "ForteBank",
+            "salary": 150000,
+            "url": "https://hh.ru/vacancy/120202348",
+            "city": "Астана",
+            "description": "Сопровождение DataLake. Разработка ETL. Разработка и автоматизация форм отчетности, витрин данных."
+        },
+        {
+            "id": "12",
+            "name": "QA Engineer (middle)",
+            "company": "Клируэй Текнолоджис",
+            "salary": 20000,
+            "url": "https://hh.ru/vacancy/120207758",
+            "city": "Москва",
+            "description": "Выполнять все виды тестирование: smoke, регресс, новая функциональность, повторное тестирование, участие в ПМИ\\ПСИ и тестирование требований. Вести тестовую документацию..."
+        },
+    ]
+
 @pytest.fixture
-def data_from_api() -> dict:
+def test_data_from_api() -> dict:
     return {
         "items": [
             {

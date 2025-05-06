@@ -3,16 +3,25 @@ from unittest.mock import Mock
 
 from src.api import HH
 
-
-def test_get_vacancies(mock_session: Any, data_from_api: Any) -> None:
-    hh_api_exemple = HH()
-
+def test_get_wrong_id(mock_session:Any, capfd:Any)->None:
+    hh = HH()
     mock_response = Mock()
-    mock_response.json.return_value = data_from_api
+    mock_response.json.return_value = {'errors':[{'type':'not_found'}]}
+    mock_response.raise_for_status = Mock()
+    mock_session.return_value.get.return_value = mock_response
+    v = hh.get_vacancy_by_id('wrong_id')
+    out, err = capfd.readouterr()
+    assert out == "'Error get vacancy with id 'wrong_id': [{'type': 'not_found'}]'\n"
+
+
+def test_get_vacancies(mock_session: Any, test_data_from_api: Any) -> None:
+    hh = HH()
+    mock_response = Mock()
+    mock_response.json.return_value = test_data_from_api
     mock_response.raise_for_status = Mock()
     mock_session.return_value.get.return_value = mock_response
 
-    vacancies = hh_api_exemple.load_vacancies("Python")
+    vacancies = hh.load_vacancies("Python")
     assert len(vacancies) == 2
     assert vacancies[0].name == "Менеджер чатов (в Яндекс)"
     assert vacancies[0].salary == 30000
@@ -23,13 +32,28 @@ def test_get_vacancies(mock_session: Any, data_from_api: Any) -> None:
 
 
 def test_empty_vacancies(mock_session: Any) -> None:
-    hh_api_exemple = HH()
+    hh = HH()
 
     mock_response = Mock()
     mock_response.json.return_value = {"items": []}
     mock_response.raise_for_status = Mock()
     mock_session.return_value.get.return_value = mock_response
 
-    vacancies = hh_api_exemple.load_vacancies("Python")
+    vacancies = hh.load_vacancies("Python")
 
     assert len(vacancies) == 0
+
+def test_get_by_id(mock_session:Any, test_data_from_api:Any)->None:
+    hh = HH()
+    mock_response = Mock()
+    mock_response.json.return_value = test_data_from_api["items"][0]
+    mock_response.raise_for_status = Mock()
+    mock_session.return_value.get.return_value = mock_response
+    vacancy = hh.get_vacancy_by_id(test_data_from_api["items"][0]["id"])
+    assert str(vacancy) == ('ID: 119755314\n'
+ '        Name: Менеджер чатов (в Яндекс)\n'
+ '        City: Москва\n'
+ '        Description: Description not set\n'
+ '        Company: Гончаров Никита Дмитриевич\n'
+ '        Salary: 30000\n'
+ '        Link: https://hh.ru/vacancy/119755314')

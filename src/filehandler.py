@@ -1,6 +1,8 @@
 import json
 import os
+import sys
 from abc import ABC, abstractmethod
+from math import trunc
 from typing import Any
 
 from src.vacancy import Vacancy
@@ -12,48 +14,67 @@ class FileHandler(ABC):
 
     @abstractmethod
     def add_vacancy(self, vacancy: Vacancy) -> None:
+        """Add vacancies to file"""
         pass
 
     @abstractmethod
     def get_vacancies(self, **criteria: Any) -> list:
+        """Get vacancies by criteria"""
         pass
 
     @abstractmethod
     def delete_vacancy(self, vacancy_id: str) -> None:
+        """Delete vacancy by id"""
         pass
 
 
 class JSONFileHandler(FileHandler):
     def __init__(self, filename: str = "data/vacancies.json") -> None:
-        super().__init__(filename)
+        super().__init__(os.path.join(sys.path[1],filename))
 
-    def add_vacancy(self, vacancy: Vacancy) -> None:
-        """Add vacancies to file"""
+    def add_vacancy(self, vacancy: Vacancy) -> list:
         vacancies = self.get_vacancies()
-        if len([x for x in vacancies if x["id"] == vacancy.id]) > 0:
+        if len([x for x in vacancies if x.id == vacancy.id]) > 0:
             print("Vacancy exists")
-            return
-        vacancies.append(vacancy.to_dict())
+            return vacancies
+        vacancies.append(vacancy)
         with open(self._filename, "w") as f:
-            json.dump(vacancies, f, indent=4, ensure_ascii=False)
-
-    def get_vacancies(self, **criteria: Any) -> Any:
-        """Get vacancies by criteria"""
-        if not os.path.exists(self._filename):
-            return []
-        with open(self._filename, "r") as f:
-            vacancies = json.load(f)
-        if criteria:
-            filtered_vacancies = []
-            for vacancy in vacancies:
-                if all(vacancy.get(key) == value for key, value in criteria.items()):
-                    filtered_vacancies.append(vacancy)
-            return filtered_vacancies
+            json.dump(list(map(lambda x: x.to_dict(), vacancies)), f, indent=4, ensure_ascii=False)
         return vacancies
 
-    def delete_vacancy(self, vacancy_id: str) -> None:
-        """Delete vacancy by id"""
+    def get_vacancies(self, search:str="") -> Any:
+        if not os.path.exists(self._filename):
+            print(f"File '{self._filename}' not exists")
+            return []
+        with open(self._filename, "r") as f:
+            vacancies_json = json.load(f)
+        if search:
+            print('zzzz',search)
+            fields = list(map(lambda x: x.replace('_', ''), Vacancy.__slots__))
+            fields.remove('salary')
+            filtered_vacancies = []
+            for vacancy_json in vacancies_json:
+                add_to_filtered = False
+                for f in fields:
+                    if vacancy_json.get(f).lower().find(search.lower())>=0:
+                        add_to_filtered = True
+                        break
+                if add_to_filtered:
+                    filtered_vacancies.append(Vacancy(vacancy_json))
+            return filtered_vacancies
+        return list(map(lambda x: Vacancy(x), vacancies_json))
+
+    def delete_vacancy(self, vacancy_id: str) -> list:
         vacancies = self.get_vacancies()
-        vacancies = [vacancy for vacancy in vacancies if vacancy.get("id") != vacancy_id]
-        with open(self._filename, "w") as f:
-            json.dump(vacancies, f, indent=4, ensure_ascii=False)
+        found_vacancy = None
+        for v in vacancies:
+            if v.id==vacancy_id:
+                found_vacancy = v
+        if found_vacancy:
+            vacancies = [vacancy for vacancy in vacancies if vacancy.id != found_vacancy.id]
+            with open(self._filename, "w") as f:
+                json.dump(list(map(lambda x: x.to_dict(), vacancies)), f, indent=4, ensure_ascii=False)
+            print(f"Vacancy {vacancy_id} deleted")
+        else:
+            print(f"Vacancy with ID:{vacancy_id} not found")
+        return vacancies

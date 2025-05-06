@@ -1,125 +1,128 @@
+from typing import Callable
+
+
 class Vacancy:
-    __slots__ = ("_id", "_name", "_company", "_salary", "_url", "_city", "_description")
+    __slots__ = ("_id", "_name", "_company","_salary","_url","_city","_description")
 
-    def __init__(object, id: str, name: str, company: str, salary: int, url: str, city: str, description: str) -> None:
-        object._id = id
-        object._name = object.__validate_name(name)
-        object._company = object.__validate_company(company)
-        object._salary = object.__validate_salary(salary)
-        object._url = object.__validate_url(url)
-        object._city = object.__validate_city(city)
-        object._description = object.__validate_description(description)
-
-    @property
-    def id(object) -> str:
-        return object._id
+    def __init__(self, args) -> None:
+        self._id = args['id']
+        self._name = self.__validate_name(args['name'])
+        self._company = self.__validate_company(args['company'])
+        self._salary = self.__validate_salary(args['salary'])
+        self._url = self.__validate_url(args['url'])
+        self._city = self.__validate_city(args['city'])
+        self._description = self.__validate_description(args['description'])
 
     @property
-    def name(object) -> str:
-        return object._name
+    def id(self) -> str:
+        return self._id
 
     @property
-    def company(object) -> str:
-        return object._company
+    def name(self) -> str:
+        return self._name
 
     @property
-    def salary(object) -> float:
-        return object._salary
+    def company(self) -> str:
+        return self._company
 
     @property
-    def url(object) -> str:
-        return object._url
+    def salary(self) -> float:
+        return self._salary
 
     @property
-    def city(object) -> str:
-        return object._city
+    def url(self) -> str:
+        return self._url
 
     @property
-    def description(object) -> str:
-        return object._description
+    def city(self) -> str:
+        return self._city
 
-    def __validate_description(object, value: str) -> str:
+    @property
+    def description(self) -> str:
+        return self._description
+
+    def __validate_description(self, value: str) -> str:
         """Description validation"""
         if not isinstance(value, str) or not value:
             return "Description not set"
         return value
 
-    def __validate_city(object, value: str) -> str:
+    def __validate_city(self, value: str) -> str:
         """City validation"""
         if not isinstance(value, str) or not value:
             return "City name not set"
         return value
 
-    def __validate_name(object, name: str) -> str:
+    def __validate_name(self, name: str) -> str:
         """Name validation"""
         if not isinstance(name, str) or not name:
             return "Vacancy name not set"
         return name
 
-    def __validate_company(object, company: str) -> str:
+    def __validate_company(self, company: str) -> str:
         """Company validation"""
         if not isinstance(company, str) or not company:
             return "Company name not set"
         return company
 
-    def __validate_salary(object, salary: int) -> int:
+    def __validate_salary(self, salary: int) -> int:
         """Salary validation"""
         if not isinstance(salary, int) or salary < 0:
             return 0
         return salary
 
-    def __validate_url(object, url: str) -> str:
+    def __validate_url(self, url: str) -> str:
         """URL validation"""
         if not isinstance(url, str) or not url.startswith("http"):
             return "Wrong URL"
         return url
 
-    def __lt__(object, other: object) -> bool:
+    def __lt__(self, other: object) -> bool:
         if not isinstance(other, Vacancy):
             raise TypeError("Wrong type comparison")
-        return object.salary < other.salary
+        return self.salary < other.salary
 
-    def __le__(object, other: object) -> bool:
+    def __le__(self, other: object) -> bool:
         if not isinstance(other, Vacancy):
             raise TypeError("Wrong type comparison")
-        return object.salary <= other.salary
+        return self.salary <= other.salary
 
-    def __eq__(object, other: object) -> bool:
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, Vacancy):
             raise TypeError("Wrong type comparison")
-        return object.salary == other.salary
+        return self.salary == other.salary
 
-    def __ne__(object, other: object) -> bool:
+    def __ne__(self, other: object) -> bool:
         if not isinstance(other, Vacancy):
             raise TypeError("Wrong type comparison")
-        return object.salary != other.salary
+        return self.salary != other.salary
 
-    def __gt__(object, other: object) -> bool:
+    def __gt__(self, other: object) -> bool:
         if not isinstance(other, Vacancy):
             raise TypeError("Wrong type comparison")
-        return object.salary > other.salary
+        return self.salary > other.salary
 
-    def __ge__(object, other: object) -> bool:
+    def __ge__(self, other: object) -> bool:
         if not isinstance(other, Vacancy):
             raise TypeError("Wrong type comparison")
-        return object.salary >= other.salary
+        return self.salary >= other.salary
 
-    def __str__(object) -> str:
-        return f"""ID: {object.id}
-        Name: {object.name}
-        City: {object.city}
-        Description: {object.description}
-        Company: {object.company}
-        Salary: {object.salary}
-        Link: {object.url}"""
+    def __str__(self) -> str:
+        return f"""ID: {self._id}
+        Name: {self.name}
+        City: {self.city}
+        Description: {self.description}
+        Company: {self.company}
+        Salary: {self.salary}
+        Link: {self.url}"""
 
-    def to_dict(object) -> dict:
+    def to_dict(self) -> dict:
         return {
-            "id": object.id,
-            "name": object.name,
-            "company": object.company,
-            "salary": object.salary,
-            "url": object.url,
-            "city": object.city,
-            "description": object.description,
+            "id": self.id,
+            "name": self.name,
+            "company": self.company,
+            "salary": self.salary,
+            "url": self.url,
+            "city": self.city,
+            "description": self.description,
         }
