@@ -1,1 +1,1 @@
-# skypro-hh-vacancies
+# Search vacancies from hh.ru
