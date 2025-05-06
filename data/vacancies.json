@@ -1,0 +1,47 @@
+[
+    {
+        "id": "120207758",
+        "name": "QA Engineer (middle)",
+        "company": "Клируэй Текнолоджис",
+        "salary": 20000,
+        "url": "https://hh.ru/vacancy/120207758",
+        "city": "Москва",
+        "description": "Выполнять все виды тестирование: smoke, регресс, новая функциональность, повторное тестирование, участие в ПМИ\\ПСИ и тестирование требований. Вести тестовую документацию..."
+    },
+    {
+        "id": "120205359",
+        "name": "Backend-разработчик",
+        "company": "PITTSBURGH INTERNATIONAL",
+        "salary": 300000,
+        "url": "https://hh.ru/vacancy/120205359",
+        "city": "Ташкент",
+        "description": "Разрабатывать и поддерживать backend нашего сервиса на FastAPI. Проектировать и оптимизировать архитектуру, повышая её масштабируемость и производительность. Работать с базами..."
+    },
+    {
+        "id": "119827956",
+        "name": "Python-разработчик",
+        "company": "Лидер Екатерина Сергеевна",
+        "salary": 0,
+        "url": "https://hh.ru/vacancy/119827956",
+        "city": "Челябинск",
+        "description": "1.Разработка и поддержка Telegram-ботов на <highlighttext>Python</highlighttext> (с использованием aiogram, telebot, pyrogram и тд.). 2.Создание веб-интерфейсов с использованием фреймворков..."
+    },
+    {
+        "id": "120208263",
+        "name": "Специалист отдела аналитики",
+        "company": "Холдем",
+        "salary": 80000,
+        "url": "https://hh.ru/vacancy/120208263",
+        "city": "Москва",
+        "description": "Анализировать обращения пользователей в службу поддержки и выявлять ключевые тенденции (категории проблем, типичные запросы и т.д.). Составлять отчеты по..."
+    },
+    {
+        "id": "117271018",
+        "name": "Senior Python Developer",
+        "company": "Hi, Rockits!",
+        "salary": 5,
+        "url": "Wrong URL",
+        "city": "Москва",
+        "description": "<p><strong>Hello! Currently, I&#39;m looking for an experienced Python Developer for cloud-based file upload and management service.<br /><br />Your Role:</strong></p> <p>As an important member of a globally distributed backend team, you will have the freedom to innovate and the support to excel. Your expertise will drive the creation and support of file uploading system.</p> <p>If you are passionate about developing cutting-edge solutions and thrive in a dynamic, collaborative environment, we would love to hear from you.</p> <p><strong>Key Responsibilities:</strong></p> <p>- Develop and maintain file platform ensuring it meets the high standards for performance and reliability</p> <p>- Integrate with third-party services enhancing functionality and user experience</p> <p>- Work closely with other developers, product managers, and stakeholders across the organization to deliver on project goals and contribute to the overall strategy</p> <p>- Continuously seek ways to improve the platform and processes, embracing new technologies and methodologies to drive innovation</p> <p><strong>To be successful in this role you need the following:</strong></p> <p>- At least 5 years of experience as a Software Engineer</p> <p>- Previous professional experience in working with Python 3</p> <p>- Experience with building high-load systems and ways of relation DB optimization.</p> <p>- Focus on quality, tests, simple solutions, and clean code</p> <p>- Comfort with speaking and writing in Russian and English languages</p> <p><strong>Nice-to-haves:</strong></p> <p>- Experience in the design and implementation of high-load systems and services</p> <p>- Experience with Go, Django, Flask, Tornado, Kafka, Celery, AWS</p> <p>- Knowledge of image optimization and/or video processing</p> <p>- Participating in open-source projects</p> <p><strong>Why Join the Team?</strong></p> <p>- Access to a mental health and wellbeing platform with 24/7 dedicated psychological and physical support and targeted programs to promote wellness</p> <p>- Opportunities to take advantage of LinkedIn Learning, internal training sessions, language platform, and other resources to grow your skills.</p> <p><em><strong>- Relocation.</strong></em></p> <p> </p> <p> </p>"
+    }
+]
