@@ -49,7 +49,6 @@ class JSONFileHandler(FileHandler):
         with open(self._filename, "r") as f:
             vacancies_json = json.load(f)
         if search:
-            print('zzzz',search)
             fields = list(map(lambda x: x.replace('_', ''), Vacancy.__slots__))
             fields.remove('salary')
             filtered_vacancies = []
