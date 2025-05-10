@@ -11,7 +11,6 @@ def mock_session() -> Any:
         yield mock
 
 
-
 @pytest.fixture()
 def test_data_from_json() -> list:
     return [

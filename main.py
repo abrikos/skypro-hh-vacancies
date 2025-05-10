@@ -20,7 +20,36 @@ def main():
     db.prepare_db()
     db.insert_employers(data["employers"])
     db.insert_vacancies(data["vacancies"])
-    db.get_all_vacancies()
+    vacancies =  db.get_all_vacancies()
+    companies = db.get_companies_and_vacancies_count()
+    print("==================")
+    print("Companies:")
+    print("==================")
+    for company in companies:
+        print(f"Company: {company[1]}. Vacancies: {company[2]}")
+    print("==================")
+    print("Vacancies:")
+    print("==================")
+    for vac in vacancies:
+        db.print_vacancy(vac)
+    avg = db.get_avg_salary()
+    print("=================")
+    print(f"Average salary: {avg}")
+    print("=================")
+    print("Vacancies with salary over avg:")
+    print("==================")
+    higher = db.get_vacancies_with_higher_salary()
+    for vac in higher:
+        db.print_vacancy(vac)
+    keyword = "монтажник"
+    print("=================")
+    print(f"Vacancies by keyword '{keyword}':")
+    print("==================")
+    search = db.get_vacancies_with_keyword(keyword)
+    for vac in search:
+        db.print_vacancy(vac)
+
+
 
 if __name__ == "__main__":
     main()
