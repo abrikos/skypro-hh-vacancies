@@ -4,42 +4,16 @@ from unittest.mock import patch
 
 import pytest
 
-from src.filehandler import JSONFileHandler
-from src.vacancy import Vacancy
-
 
 @pytest.fixture
 def mock_session() -> Any:
-    with patch("src.api.requests.Session") as mock:
+    with patch("src.hh_api.requests.Session") as mock:
         yield mock
 
 
-@pytest.fixture
-def vacancy1() -> Vacancy:
-    return Vacancy({"id":"1", "name":"a", "company":"b", "salary":10, "url":"http://x.com", "city":"Y", "description":"AA"})
-
-
-@pytest.fixture
-def vacancy2() -> Vacancy:
-    return Vacancy({"id": "2", "name": "b", "company": "b", "salary": 20, "url": "http://y.ru", "city": "G", "description": "BB"})
-
-
-@pytest.fixture
-def vacancy_wrong() -> Vacancy:
-    return Vacancy({"id": "3", "name": "", "company": "", "salary": -1, "url": "wrong", "city": "", "description": ""})
-
-
-@pytest.fixture
-def json_file_handler(tmpdir: str) -> object:
-    filename = str(tmpdir.join("vacs.json"))
-    with open(filename,"w") as f:
-        json.dump([], f)
-    handler = JSONFileHandler(filename)
-    return handler
-
 
 @pytest.fixture()
-def test_data_from_json()->list:
+def test_data_from_json() -> list:
     return [
         {
             "id": "11",
@@ -48,7 +22,7 @@ def test_data_from_json()->list:
             "salary": 150000,
             "url": "https://hh.ru/vacancy/120202348",
             "city": "Астана",
-            "description": "Сопровождение DataLake. Разработка ETL. Разработка и автоматизация форм отчетности, витрин данных."
+            "description": "Сопровождение DataLake. Разработка ETL. Разработка и автоматизация форм отчетности, витрин данных.",
         },
         {
             "id": "12",
@@ -57,9 +31,10 @@ def test_data_from_json()->list:
             "salary": 20000,
             "url": "https://hh.ru/vacancy/120207758",
             "city": "Москва",
-            "description": "Выполнять все виды тестирование: smoke, регресс, новая функциональность, повторное тестирование, участие в ПМИ\\ПСИ и тестирование требований. Вести тестовую документацию..."
+            "description": "Выполнять все виды тестирование: smoke, регресс, новая функциональность, повторное тестирование, участие в ПМИ\\ПСИ и тестирование требований. Вести тестовую документацию...",
         },
     ]
+
 
 @pytest.fixture
 def test_data_from_api() -> dict:
