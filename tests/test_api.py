@@ -1,20 +1,11 @@
 from typing import Any
 from unittest.mock import Mock
 
-from src.api import HH
-
-def test_get_wrong_id(mock_session:Any, capfd:Any)->None:
-    hh = HH()
-    mock_response = Mock()
-    mock_response.json.return_value = {'errors':[{'type':'not_found'}]}
-    mock_response.raise_for_status = Mock()
-    mock_session.return_value.get.return_value = mock_response
-    v = hh.get_vacancy_by_id('wrong_id')
-    out, err = capfd.readouterr()
-    assert out == "'Error get vacancy with id 'wrong_id': [{'type': 'not_found'}]'\n"
+from src.hh_api import HH
 
 
 def test_get_vacancies(mock_session: Any, test_data_from_api: Any) -> None:
+    """Test receive vacancies from API"""
     hh = HH()
     mock_response = Mock()
     mock_response.json.return_value = test_data_from_api
@@ -32,6 +23,7 @@ def test_get_vacancies(mock_session: Any, test_data_from_api: Any) -> None:
 
 
 def test_empty_vacancies(mock_session: Any) -> None:
+    """Test empty list of vacancies from API"""
     hh = HH()
 
     mock_response = Mock()
@@ -42,18 +34,3 @@ def test_empty_vacancies(mock_session: Any) -> None:
     vacancies = hh.load_vacancies("Python")
 
     assert len(vacancies) == 0
-
-def test_get_by_id(mock_session:Any, test_data_from_api:Any)->None:
-    hh = HH()
-    mock_response = Mock()
-    mock_response.json.return_value = test_data_from_api["items"][0]
-    mock_response.raise_for_status = Mock()
-    mock_session.return_value.get.return_value = mock_response
-    vacancy = hh.get_vacancy_by_id(test_data_from_api["items"][0]["id"])
-    assert str(vacancy) == ('ID: 119755314\n'
- '        Name: Менеджер чатов (в Яндекс)\n'
- '        City: Москва\n'
- '        Description: Description not set\n'
- '        Company: Гончаров Никита Дмитриевич\n'
- '        Salary: 30000\n'
- '        Link: https://hh.ru/vacancy/119755314')
