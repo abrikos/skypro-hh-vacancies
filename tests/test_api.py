@@ -4,14 +4,8 @@ from unittest.mock import Mock
 from src.hh_api import HH
 
 
-def test_get_wrong_id(mock_session: Any, capfd: Any) -> None:
-    mock_response = Mock()
-    mock_response.json.return_value = {"errors": [{"type": "not_found"}]}
-    mock_response.raise_for_status = Mock()
-    mock_session.return_value.get.return_value = mock_response
-
-
 def test_get_vacancies(mock_session: Any, test_data_from_api: Any) -> None:
+    """Test receive vacancies from API"""
     hh = HH()
     mock_response = Mock()
     mock_response.json.return_value = test_data_from_api
@@ -29,6 +23,7 @@ def test_get_vacancies(mock_session: Any, test_data_from_api: Any) -> None:
 
 
 def test_empty_vacancies(mock_session: Any) -> None:
+    """Test empty list of vacancies from API"""
     hh = HH()
 
     mock_response = Mock()
