@@ -1,0 +1,51 @@
+<style>
+    img{
+        max-width: 200px;
+        max-height: 200px;
+    }
+    .card-img-top{
+        height: 200px;
+    }
+</style>
+<div>
+    <h1 class="text-center">Catalogue</h1>
+    <div class="d-none" id="card-template">
+        <div class="card m-3">
+            <div class="card-img-top">
+                <img src="IMG" alt="table">
+            </div>
+            <div class="card-body">
+                <div class="card-title">
+                    NAME
+                </div>
+                <div class="card-text">
+                    <h3>$ PRICE</h3>
+                    <button class="btn btn-primary">Buy</button>
+                    DESC
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex" id="list">
+
+    </div>
+</div>
+<script language="JavaScript">
+    const cats = [
+        {name:'Table', desc:'Best table', img:'https://vermontwoodsstudios.com/cdn/shop/files/Brighton-Solid-Top-Table_36x72_Natural_Walnut.jpg?v=1746402398&width=1946', price:100},
+        {name:'Chair', desc:'Best chair',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm3QGEds7QjBevWIXy6ur9KQE6u-w0MkXpQQ&s', price:30},
+        {name:'Bed', desc:'Best bed',img:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIYgwD6p2SjGc9LlMnjuxUsWudnx1s5r23_Q&s', price:400},
+    ];
+    const list = document.getElementById('list')
+    for (cat of cats){
+        list.innerHTML += document.getElementById('card-template').innerHTML
+            .replace('NAME', cat.name)
+            .replace('IMG', cat.img)
+            .replace('PRICE', cat.price)
+            .replace('DESC', cat.desc)
+    }
+
+
+</script>
