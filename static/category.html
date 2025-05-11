@@ -1,0 +1,34 @@
+<div>
+    <h1 class="text-center">Categories</h1>
+    <div class="d-none" id="card-template">
+        <div class="card m-3" style="width:200px">
+            <div class="card-body">
+                <div class="card-title">
+                    <i class="bi-ICON"></i>
+                    <a href="#">NAME</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex" id="list">
+
+    </div>
+</div>
+<script language="JavaScript">
+    const cats = [
+        {name:'House', icon:'house'},
+        {name:'Vacancy', icon:'emoji-sunglasses'},
+        {name:'Garden', icon:'flower1'},
+        {name:'Work', icon:'hammer'},
+    ];
+    const list = document.getElementById('list')
+    console.log(list)
+    for (cat of cats){
+        list.innerHTML += document.getElementById('card-template').innerHTML
+            .replace('NAME', cat.name)
+            .replace('ICON', cat.icon)
+    }
+
+
+</script>
